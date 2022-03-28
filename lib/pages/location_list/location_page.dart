@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_app/location_list.dart';
 //import 'package:flutter_svg/svg.dart';
-import 'package:flutter_app/data/location_card.dart';
-import '../screens/forecast_screen.dart';
+import 'search_feild.dart';
+import 'forecast_screen.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({Key? key}) : super(key: key);
@@ -14,8 +11,8 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-  late String cityName1;
   final Color backgroundColor = Colors.black;
+  String currentCityName = 'London';
 
   @override
   Widget build(BuildContext context) {
@@ -57,34 +54,18 @@ class _LocationPageState extends State<LocationPage> {
               'Weather',
               style: titleTextStyle,
             ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Search for a city or airport',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  filled: true,
-                  fillColor: Colors.white10,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                  ),
-                ),
-                onChanged: (value) {
-                  cityName1 = value;
-                },
-              ),
-            ),
-            const ForecastScreen(),
+            SearchField(currentCityName, setNewCityName),
+            ForecastScreen(currentCityName),
           ],
         ),
       ),
     );
+  }
+
+  void setNewCityName(String cityName) {
+    print("setNewCityName: $cityName");
+    setState(() {
+      currentCityName = cityName;
+    });
   }
 }

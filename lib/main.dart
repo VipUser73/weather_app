@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/location_page.dart';
+import 'package:flutter_app/pages/location_list/location_page.dart';
 import 'package:flutter_app/theme.dart';
 
 void main() => runApp(const MyApp());

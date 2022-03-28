@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/forecast_daily.dart';
-
-import '../location_list.dart';
+import 'package:flutter_app/pages/location_list/locations_vh.dart';
 
 class LocationCard {
   final String imagePath;
@@ -32,7 +31,7 @@ class CityView extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       shrinkWrap: true,
-      children: items.map((e) => LocationList(item: e)).toList(),
+      children: items.map((e) => LocationVH(item: e)).toList(),
     );
   }
 }

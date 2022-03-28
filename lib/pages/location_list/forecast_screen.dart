@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/api/weather_api.dart';
-import 'package:flutter_app/data/location_card.dart';
+import 'location_card.dart';
 import 'package:flutter_app/models/forecast_daily.dart';
 
 class ForecastScreen extends StatefulWidget {
-  const ForecastScreen({Key? key}) : super(key: key);
+  ForecastScreen(this.currentCityName, {Key? key}) : super(key: key);
+  final String currentCityName;
 
   @override
   _ForecastScreenState createState() => _ForecastScreenState();
@@ -12,26 +13,29 @@ class ForecastScreen extends StatefulWidget {
 
 class _ForecastScreenState extends State<ForecastScreen> {
   late Future<Forecast> forecastObject;
-  final String _cityName = "London";
+  //late final String cityName1 = "Moscow";
 
-  @override
-  void initState() {
-    super.initState();
-    forecastObject = WeatherApi().forecastCity(cityName: _cityName);
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print("initState: ${widget.currentCityName}");
+  //   forecastObject =
+  //       WeatherApi().forecastCity(cityName: widget.currentCityName);
 
-    // forecastObject.then((weather) {
-    //   print(weather.list![0].weather![0].main);
-    // });
-  }
+  // forecastObject.then((weather) {
+  //   print(weather.list![0].weather![0].main);
+  // });
+  //}
 
   @override
   Widget build(BuildContext context) {
+    print("build: ${widget.currentCityName}");
     return ListView(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       children: [
         FutureBuilder<Forecast>(
-          future: forecastObject,
+          future: loadCity(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Column(
@@ -49,4 +53,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
       ],
     );
   }
+
+  Future<Forecast> loadCity() =>
+      WeatherApi().forecastCity(cityName: widget.currentCityName);
 }

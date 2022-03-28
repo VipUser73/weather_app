@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/location_card.dart';
+import 'location_card.dart';
 
-class LocationList extends StatelessWidget {
-  const LocationList({Key? key, required this.item}) : super(key: key);
+class LocationVH extends StatelessWidget {
+  const LocationVH({Key? key, required this.item}) : super(key: key);
 
   final LocationCard item;
 
