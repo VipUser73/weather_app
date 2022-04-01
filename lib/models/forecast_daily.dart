@@ -1,3 +1,5 @@
+import 'package:flutter_app/utilities/constants.dart';
+
 class Forecast {
   City? city;
   String? cod;
@@ -81,8 +83,8 @@ class Coord {
   Coord({this.lon, this.lat});
 
   Coord.fromJson(Map<String, dynamic> json) {
-    lon = json['lon'];
-    lat = json['lat'];
+    lon = json['lon'].toDouble();
+    lat = json['lat'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
@@ -124,7 +126,7 @@ class WeatherList {
     this.gust,
     this.clouds,
     this.pop,
-    this.rain,
+    //this.rain,
     //this.snow
   });
 
@@ -149,7 +151,7 @@ class WeatherList {
     gust = json['gust'];
     clouds = json['clouds'];
     pop = json['pop'].toInt();
-    rain = json['rain'];
+    //rain = json['rain'].toDouble();
     //snow = json['snow'].toDouble();
   }
 
@@ -178,6 +180,10 @@ class WeatherList {
     //data['snow'] = this.snow;
     return data;
   }
+// String getIconUrl() {
+//     return Constants.iconPath + weather![0].icon + ".png";
+//   }
+
 }
 
 class Temp {
@@ -220,10 +226,10 @@ class FeelsLike {
   FeelsLike({this.day, this.night, this.eve, this.morn});
 
   FeelsLike.fromJson(Map<String, dynamic> json) {
-    day = json['day'];
-    night = json['night'];
+    day = json['day'].toDouble();
+    night = json['night'].toDouble();
     eve = json['eve'].toDouble();
-    morn = json['morn'];
+    morn = json['morn'].toDouble();
   }
 
   Map<String, dynamic> toJson() {

@@ -4,7 +4,7 @@ import 'location_card.dart';
 import 'package:flutter_app/models/forecast_daily.dart';
 
 class ForecastScreen extends StatefulWidget {
-  ForecastScreen(this.currentCityName, {Key? key}) : super(key: key);
+  const ForecastScreen(this.currentCityName, {Key? key}) : super(key: key);
   final String currentCityName;
 
   @override
@@ -45,7 +45,10 @@ class _ForecastScreenState extends State<ForecastScreen> {
               );
             } else {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: Text(
+                  "City not found.",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
               );
             }
           },

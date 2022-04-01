@@ -10,7 +10,7 @@ class SearchField extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(8),
           child: TextField(
             style: const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
@@ -23,7 +23,7 @@ class SearchField extends StatelessWidget {
                   Radius.circular(20),
                 ),
               ),
-              icon: Icon(
+              prefixIcon: Icon(
                 Icons.search,
                 color: Colors.grey,
               ),

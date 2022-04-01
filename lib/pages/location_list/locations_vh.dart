@@ -12,15 +12,11 @@ class LocationVH extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, '/location');
       },
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(item.imagePath),
-            fit: BoxFit.fill,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
+      child: Card(
+        elevation: 10,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        color: Colors.grey,
+        shadowColor: Colors.white,
         margin: const EdgeInsets.only(top: 20),
         child: Column(
           children: [
@@ -30,7 +26,7 @@ class LocationVH extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 16, top: 10),
                   child: Text(
-                    item.textTitle,
+                    item.location,
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -41,11 +37,10 @@ class LocationVH extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 13, top: 4),
                   child: Text(
-                    item.temperatureNow,
+                    "${item.temperatureNow}°",
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                       fontSize: 53,
-                      fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
@@ -56,11 +51,11 @@ class LocationVH extends StatelessWidget {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 11),
+              padding: const EdgeInsets.only(left: 16, right: 19, bottom: 11),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  Text(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
                     "Partly Cloudy",
                     style: TextStyle(
                       fontSize: 18,
@@ -69,9 +64,9 @@ class LocationVH extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "H:29° L:15°",
+                    "H: ${item.temperatureMax}° L: ${item.temperatureMin}°",
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

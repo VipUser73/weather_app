@@ -4,13 +4,18 @@ import 'package:flutter_app/pages/location_list/locations_vh.dart';
 
 class LocationCard {
   final String imagePath;
-  final textTitle;
+  final String location;
   final String temperatureNow;
+  final String temperatureMin;
+  final String temperatureMax;
 
-  LocationCard(
-      {required this.temperatureNow,
-      required this.imagePath,
-      required this.textTitle});
+  LocationCard({
+    required this.temperatureNow,
+    required this.imagePath,
+    required this.location,
+    required this.temperatureMin,
+    required this.temperatureMax,
+  });
 }
 
 class CityView extends StatelessWidget {
@@ -20,16 +25,21 @@ class CityView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var city = snapshot.data?.city?.name;
-    var country = snapshot.data?.city?.country;
+    var tempNow = snapshot.data?.list![0].temp?.day?.toStringAsFixed(0);
+    var tempMin = snapshot.data?.list![0].temp?.min?.toStringAsFixed(0);
+    var tempMax = snapshot.data?.list![0].temp?.max?.toStringAsFixed(0);
+
     final items = [
       LocationCard(
           imagePath: 'assets/images/cloudy.png',
-          textTitle: '$city',
-          temperatureNow: '21°'),
+          location: '$city',
+          temperatureNow: '$tempNow',
+          temperatureMax: '$tempMax',
+          temperatureMin: '$tempMin'),
     ];
 
     return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       shrinkWrap: true,
       children: items.map((e) => LocationVH(item: e)).toList(),
     );
