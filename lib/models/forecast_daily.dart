@@ -180,10 +180,11 @@ class WeatherList {
     //data['snow'] = this.snow;
     return data;
   }
-// String getIconUrl() {
-//     return Constants.iconPath + weather![0].icon + ".png";
-//   }
 
+  String getIconUrl() {
+    String icon = weather?[0].icon ?? "03d";
+    return Constants.iconPath + icon + ".png";
+  }
 }
 
 class Temp {

@@ -10,12 +10,12 @@ class LocationVH extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/location');
+        //Navigator.pushNamed(context, '/location');
       },
       child: Card(
         elevation: 10,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Colors.grey,
+        color: Colors.grey[600],
         shadowColor: Colors.white,
         margin: const EdgeInsets.only(top: 20),
         child: Column(
@@ -47,22 +47,20 @@ class LocationVH extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 19, bottom: 11),
+              padding: const EdgeInsets.only(left: 16, right: 19),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Partly Cloudy",
-                    style: TextStyle(
+                  Text(
+                    item.mainWeather,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
+                  Image.network(item.imagePath),
                   Text(
                     "H: ${item.temperatureMax}° L: ${item.temperatureMin}°",
                     textAlign: TextAlign.right,

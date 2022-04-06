@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/svg.dart';
-import 'search_feild.dart';
-import 'forecast_screen.dart';
+import 'package:flutter_app/api/weather_api.dart';
+import '../../models/forecast_daily.dart';
+import '../../utilities/city_list.dart';
+import 'location_card.dart';
 
 class LocationPage extends StatefulWidget {
-  const LocationPage({Key? key}) : super(key: key);
+  final locationWeather;
+  LocationPage({this.locationWeather});
 
   @override
   State<LocationPage> createState() => _LocationPageState();
@@ -12,7 +14,19 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   final Color backgroundColor = Colors.black;
-  String currentCityName = 'London';
+  late Future<Forecast> forecastObject;
+
+  String currentCityName = '';
+  Future<Forecast> loadCity() =>
+      WeatherApi().fetchWeatherForecast(cityName: currentCityName);
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.locationWeather != null) {
+      forecastObject = WeatherApi().fetchWeatherForecast();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +35,8 @@ class _LocationPageState extends State<LocationPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        backgroundColor: backgroundColor,
         toolbarHeight: 0,
-        title: const Text("This is Sparta!!!"),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -54,8 +68,65 @@ class _LocationPageState extends State<LocationPage> {
               'Weather',
               style: titleTextStyle,
             ),
-            SearchField(currentCityName, setNewCityName),
-            ForecastScreen(currentCityName),
+            //SearchField(currentCityName, setNewCityName),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  hintText: 'Search for a city or airport',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.white10,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                ),
+                onSubmitted: setNewCityName,
+              ),
+            ),
+            Visibility(
+              visible: currentCityName.isEmpty,
+              child: FutureBuilder<Forecast>(
+                future: loadCity(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return CityView(snapshot: snapshot);
+                  } else {
+                    return const Center(
+                      child: Text(
+                        "City not found.",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+            Visibility(
+              visible: currentCityName.isNotEmpty,
+              child: FutureBuilder<CityList>(
+                future: getCityList(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return CityListView(snapshot: snapshot);
+                  } else {
+                    return const Center(
+                      child: Text(
+                        "City not found.",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),
