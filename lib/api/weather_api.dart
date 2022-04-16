@@ -10,7 +10,7 @@ class WeatherApi {
     Geolocation geolocation = Geolocation();
     await geolocation.getCurrentLocation();
     Map<String, String>? parameters;
-    if (cityName == null && cityName!.isEmpty) {
+    if (cityName != null) {
       var queryParameters = {
         "APPID": Constants.appID,
         "units": "metric",

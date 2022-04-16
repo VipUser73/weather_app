@@ -1,5 +1,23 @@
 import 'package:flutter/material.dart';
-import 'location_card.dart';
+import '../../models/forecast_daily.dart';
+
+class LocationCard {
+  final String imagePath;
+  final String location;
+  final String mainWeather;
+  final String temperatureNow;
+  final String temperatureMin;
+  final String temperatureMax;
+
+  LocationCard({
+    required this.temperatureNow,
+    required this.imagePath,
+    required this.location,
+    required this.mainWeather,
+    required this.temperatureMin,
+    required this.temperatureMax,
+  });
+}
 
 class LocationVH extends StatelessWidget {
   const LocationVH({Key? key, required this.item}) : super(key: key);
@@ -8,15 +26,17 @@ class LocationVH extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final titleTextStyle = theme.textTheme.headline1;
     return GestureDetector(
       onTap: () {
         //Navigator.pushNamed(context, '/location');
       },
       child: Card(
         elevation: 10,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Colors.grey[600],
-        shadowColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        color: Colors.white,
+        //shadowColor: Colors.white,
         margin: const EdgeInsets.only(top: 20),
         child: Column(
           children: [
@@ -27,11 +47,7 @@ class LocationVH extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 16, top: 10),
                   child: Text(
                     item.location,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    style: titleTextStyle,
                   ),
                 ),
                 Padding(
@@ -41,7 +57,7 @@ class LocationVH extends StatelessWidget {
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                       fontSize: 53,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -57,17 +73,20 @@ class LocationVH extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
-                  Image.network(item.imagePath),
+                  Image.network(
+                    item.imagePath,
+                    color: Colors.grey[700],
+                  ),
                   Text(
                     "H: ${item.temperatureMax}° L: ${item.temperatureMin}°",
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ],

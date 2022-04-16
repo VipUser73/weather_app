@@ -108,7 +108,7 @@ class WeatherList {
   int? deg;
   double? gust;
   int? clouds;
-  int? pop;
+  double? pop;
   double? rain;
   //double? snow;
 
@@ -148,9 +148,9 @@ class WeatherList {
     }
     speed = json['speed'].toDouble();
     deg = json['deg'];
-    gust = json['gust'];
+    gust = json['gust'].toDouble();
     clouds = json['clouds'];
-    pop = json['pop'].toInt();
+    pop = json['pop'].toDouble();
     //rain = json['rain'].toDouble();
     //snow = json['snow'].toDouble();
   }

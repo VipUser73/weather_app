@@ -35,21 +35,32 @@ class CityListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "${snapshot.data?.array[1].name}",
-      style: const TextStyle(color: Colors.white),
+    return Expanded(
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const SizedBox(width: 8),
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              title: Text(
+                "${snapshot.data?.array[index].name}",
+                style: const TextStyle(color: Colors.black),
+              ),
+            ),
+          );
+        },
+      ),
     );
+
+    //     Text(
+    //   "${snapshot.data?.array[1].name}",
+    //   style: const TextStyle(color: Colors.white),
+    // );
 
     // ListView(
     //   padding: const EdgeInsets.symmetric(horizontal: 10),
     //   shrinkWrap: true,
     //   children: items.map((e) => LocationVH(item: e)).toList(),
-    // );
-
-    // return ListView.separated(
-    //   separatorBuilder: (context, index) => const SizedBox(width: 8),
-    //   itemCount: snapshot.data!.list!.length,
-    //   itemBuilder: (context, index) => LocationVH(item: items[index]),
     // );
   }
 }
