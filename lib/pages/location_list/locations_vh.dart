@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../models/forecast_daily.dart';
 
 class LocationCard {
   final String imagePath;

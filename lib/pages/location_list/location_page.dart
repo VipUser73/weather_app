@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/api/weather_api.dart';
 import 'package:flutter_app/pages/weathet_now.dart';
-import '../../models/forecast_daily.dart';
-import '../../utilities/city_list.dart';
+import '../../models/forecast_full.dart';
+import 'city_list.dart';
 import 'locations_vh.dart';
 
 class LocationPage extends StatefulWidget {

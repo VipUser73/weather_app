@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/weather_hourly.dart';
 import '../api/weather_api.dart';
-import '../models/forecast_daily.dart';
+import '../models/forecast_full.dart';
 import 'weathet_now.dart';
 
 class ForecastPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class ForecastPage extends StatefulWidget {
 
 class _ForecastPageState extends State<ForecastPage> {
   late Future<Forecast> forecastObject;
-  final String _cityName = 'Ulyanovsk';
+  final String _cityName = 'Москва';
 
   @override
   void initState() {
@@ -41,10 +42,15 @@ class _ForecastPageState extends State<ForecastPage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.only(
+                        left: 16, right: 16, top: 6, bottom: 6),
                     child: Column(
                       children: [
                         WeatherNow(snapshot: snapshot),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        WeatherHourly(snapshot: snapshot),
                       ],
                     ),
                   );

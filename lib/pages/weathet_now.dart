@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:weather_icons/weather_icons.dart';
-import '../models/forecast_daily.dart';
+import '../models/forecast_full.dart';
 import 'location_list/location_page.dart';
-import '../utilities/formatted_date.dart';
+import '../models/formatted_date.dart';
 
 class WeatherNow extends StatelessWidget {
   final AsyncSnapshot<Forecast> snapshot;
-  const WeatherNow({required this.snapshot});
+  const WeatherNow({Key? key, required this.snapshot}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    var dateFromApi = snapshot.data?.list![0].dt;
-    var icon = snapshot.data?.list![0].getIconUrl();
-    var city = snapshot.data?.city?.name;
-    var main = snapshot.data?.list![0].weather![0].main;
-    var tempNow = snapshot.data?.list![0].temp?.day?.toStringAsFixed(0);
-    var tempMin = snapshot.data?.list![0].temp?.min?.toStringAsFixed(0);
-    var tempMax = snapshot.data?.list![0].temp?.max?.toStringAsFixed(0);
-    var wind = snapshot.data?.list![0].speed;
-    var pop = snapshot.data?.list![0].pop;
-    var pressure = snapshot.data?.list![0].pressure;
-    var humidity = snapshot.data?.list![0].humidity;
+    var dateFromApi =
+        (snapshot.data?.current?.dt)! + (snapshot.data?.timezoneOffset)!;
+    var icon = snapshot.data?.current?.getIconUrl();
+    //var city = snapshot.data?.city?.name;
+    var main = snapshot.data?.current?.weather![0].main;
+    var tempNow = snapshot.data?.current?.temp?.toStringAsFixed(0);
+    var wind = snapshot.data?.current?.windSpeed;
+    var pop = snapshot.data?.hourly![0].pop;
+    var pressure = snapshot.data?.current?.pressure;
+    var humidity = snapshot.data?.current?.humidity;
 
-    var dateForm = DateTime.fromMillisecondsSinceEpoch(dateFromApi! * 1000);
+    var dateForm = DateTime.fromMillisecondsSinceEpoch(dateFromApi * 1000);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +42,7 @@ class WeatherNow extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            Text("$city", style: theme.textTheme.headline1),
+            Text("Москва", style: theme.textTheme.headline1),
             TextButton(
               onPressed: () {
                 Route route =
@@ -64,13 +62,14 @@ class WeatherNow extends StatelessWidget {
           children: [
             Image.network(
               "$icon",
-              scale: 0.3,
+              scale: 0.4,
             ),
             Column(
               children: [
                 Text(FormattedDate.getFormattedDate(dateForm),
                     style: theme.textTheme.headline1),
-                Text("$tempNow°", style: theme.textTheme.headline1),
+                Text("$tempNow°",
+                    style: theme.textTheme.headline1?.copyWith(fontSize: 70)),
                 Text("$main", style: theme.textTheme.headline1),
               ],
             ),
@@ -111,7 +110,7 @@ class WeatherNow extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 20, left: 31.67, right: 20),
+          padding: const EdgeInsets.only(top: 12, left: 31.67, right: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -134,7 +133,7 @@ class WeatherNow extends StatelessWidget {
                     width: 10,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 27),
+                    padding: const EdgeInsets.only(right: 26),
                     child: Text("$humidity% \nHumidity",
                         style: theme.textTheme.bodyText1),
                   ),
