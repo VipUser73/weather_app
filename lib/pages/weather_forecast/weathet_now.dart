@@ -1,76 +1,61 @@
 import 'package:flutter/material.dart';
-import '../models/forecast_full.dart';
-import 'location_list/location_page.dart';
-import '../models/formatted_date.dart';
+import '../../api/constants.dart';
+import '../../api/forecast_api.dart';
+import '../Manage_location/locations_page.dart';
 
 class WeatherNow extends StatelessWidget {
-  final AsyncSnapshot<Forecast> snapshot;
-  const WeatherNow({Key? key, required this.snapshot}) : super(key: key);
+  const WeatherNow({Key? key, required this.item}) : super(key: key);
+  final ForecastApi item;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    var dateFromApi =
-        (snapshot.data?.current?.dt)! + (snapshot.data?.timezoneOffset)!;
-    var icon = snapshot.data?.current?.getIconUrl();
-    //var city = snapshot.data?.city?.name;
-    var main = snapshot.data?.current?.weather![0].main;
-    var tempNow = snapshot.data?.current?.temp?.toStringAsFixed(0);
-    var wind = snapshot.data?.current?.windSpeed;
-    var pop = snapshot.data?.hourly![0].pop;
-    var pressure = snapshot.data?.current?.pressure;
-    var humidity = snapshot.data?.current?.humidity;
-
-    var dateForm = DateTime.fromMillisecondsSinceEpoch(dateFromApi * 1000);
+    var cityName = item.name;
+    var dateFromApi = (item.daily[0].dt);
+    var icon = Constants.iconPath + item.icon;
+    var description = item.description;
+    var tempNow = item.temp;
+    var wind = item.wind;
+    var pop = item.hourly[0].pop;
+    var pressure = item.pressure;
+    var humidity = item.humidity;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton(
               onPressed: () {
-                Route route =
-                    MaterialPageRoute(builder: (context) => LocationPage());
+                Route route = MaterialPageRoute(
+                    builder: (context) => const LocationsPage());
                 Navigator.push(context, route);
               },
               child: const Icon(
                 Icons.add,
-                size: 29,
+                size: 30,
                 color: Colors.white,
               ),
             ),
-            Text("Москва", style: theme.textTheme.headline1),
-            TextButton(
-              onPressed: () {
-                Route route =
-                    MaterialPageRoute(builder: (context) => LocationPage());
-                Navigator.push(context, route);
-              },
-              child: const Icon(
-                Icons.more_vert,
-                size: 29,
-                color: Colors.white,
-              ),
-            ),
+            Text(cityName, style: theme.textTheme.headline1),
+            SizedBox(width: 60),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.network(
-              "$icon",
+              "$icon.png",
               scale: 0.4,
             ),
             Column(
               children: [
-                Text(FormattedDate.getFormattedDate(dateForm),
-                    style: theme.textTheme.headline1),
+                Text(dateFromApi, style: theme.textTheme.headline1),
                 Text("$tempNow°",
                     style: theme.textTheme.headline1?.copyWith(fontSize: 70)),
-                Text("$main", style: theme.textTheme.headline1),
+                Text(description, style: theme.textTheme.headline1),
               ],
             ),
           ],
@@ -102,7 +87,7 @@ class WeatherNow extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text("${(pop! * 100).round()}%\nChance of rain",
+                  Text("${(pop * 100).round()}%\nChance of rain",
                       style: theme.textTheme.bodyText1),
                 ],
               ),
@@ -144,11 +129,5 @@ class WeatherNow extends StatelessWidget {
         ),
       ],
     );
-
-    // return ListView.separated(
-    //   separatorBuilder: (context, index) => const SizedBox(width: 8),
-    //   itemCount: snapshot.data!.list!.length,
-    //   itemBuilder: (context, index) => LocationVH(item: items[index]),
-    // );
   }
 }
