@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../api/constants.dart';
 import '../../api/forecast_api.dart';
-import '../Manage_location/locations_page.dart';
 
 class WeatherNow extends StatelessWidget {
   const WeatherNow({Key? key, required this.item}) : super(key: key);
@@ -11,50 +10,38 @@ class WeatherNow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    var cityName = item.name;
-    var dateFromApi = (item.daily[0].dt);
-    var icon = Constants.iconPath + item.icon;
-    var description = item.description;
-    var tempNow = item.temp;
-    var wind = item.wind;
-    var pop = item.hourly[0].pop;
-    var pressure = item.pressure;
-    var humidity = item.humidity;
+    String cityName = item.name;
+    String dateFromApi = (item.daily[0].dt);
+    String icon = Constants.iconPath + item.icon;
+    String description = item.description;
+    int tempNow = item.temp;
+    int wind = item.wind;
+    double pop = item.hourly[0].pop;
+    int pressure = item.pressure;
+    int humidity = item.humidity;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Text(cityName,
+            style: theme.textTheme.headline1?.copyWith(fontSize: 24)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              onPressed: () {
-                Route route = MaterialPageRoute(
-                    builder: (context) => const LocationsPage());
-                Navigator.push(context, route);
-              },
-              child: const Icon(
-                Icons.add,
-                size: 30,
-                color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Image.network(
+                "$icon.png",
+                width: 120,
+                height: 120,
+                scale: 0.4,
               ),
-            ),
-            Text(cityName, style: theme.textTheme.headline1),
-            SizedBox(width: 60),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.network(
-              "$icon.png",
-              scale: 0.4,
             ),
             Column(
               children: [
                 Text(dateFromApi, style: theme.textTheme.headline1),
                 Text("$tempNow°",
-                    style: theme.textTheme.headline1?.copyWith(fontSize: 70)),
+                    style: theme.textTheme.headline1?.copyWith(fontSize: 60)),
                 Text(description, style: theme.textTheme.headline1),
               ],
             ),
@@ -62,11 +49,11 @@ class WeatherNow extends StatelessWidget {
         ),
         const Divider(
           height: 20,
-          thickness: 3,
+          thickness: 2,
           color: Colors.white,
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+          padding: const EdgeInsets.only(top: 3, left: 20, right: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -95,7 +82,7 @@ class WeatherNow extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 12, left: 31.67, right: 20),
+          padding: const EdgeInsets.only(top: 10, left: 31.67, right: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

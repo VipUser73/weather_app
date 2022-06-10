@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/theme.dart';
-import 'package:flutter_app/pages/splash.dart';
+import 'models/theme.dart';
+import 'pages/splash.dart';
 
 void main() => runApp(const MyApp());
 

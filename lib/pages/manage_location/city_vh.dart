@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/api/forecast_api.dart';
 import '../../api/constants.dart';
-import '../weather_forecast/forecast_page.dart';
+import '../../api/forecast_api.dart';
 
 class CityVH extends StatelessWidget {
   const CityVH(
@@ -17,51 +16,65 @@ class CityVH extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    var icon = Constants.iconPath + cityWeather.icon;
-    var cityName = cityWeather.name;
+    String icon = Constants.iconPath + cityWeather.icon;
+    String cityName = cityWeather.name;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Dismissible(
         key: UniqueKey(),
         direction: DismissDirection.endToStart,
         onDismissed: (_) => onDismissed(cityWeather),
+        background: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          alignment: Alignment.centerRight,
+          child: const Icon(Icons.delete, color: Colors.white),
+        ),
         child: GestureDetector(
           onTap: () => page(cityWeather),
           child: Card(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            color: Colors.blue.shade200,
-            shadowColor: Colors.blue,
-            elevation: 10,
+            margin: EdgeInsets.zero,
+            color: const Color.fromARGB(255, 50, 100, 160),
+            shadowColor: Colors.blueGrey,
+            elevation: 3,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          cityName,
-                          maxLines: 1,
-                        ),
+                        Text(cityName,
+                            maxLines: 1, style: theme.textTheme.headline1),
                         Text(
                           cityWeather.description,
-                          style: theme.textTheme.headline1,
+                          style: theme.textTheme.headline1?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white38),
                         ),
                       ],
                     ),
                   ),
                   Row(
                     children: [
-                      Image.network("$icon.png"),
+                      Image.network(
+                        "$icon.png",
+                        scale: 0.7,
+                      ),
                       const SizedBox(width: 10),
                       Text(
                         "${cityWeather.temp}°C",
-                        style: theme.textTheme.headline1,
+                        style:
+                            theme.textTheme.headline1?.copyWith(fontSize: 30),
                       ),
                     ],
                   ),
@@ -69,15 +82,6 @@ class CityVH extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        background: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            color: Colors.redAccent,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          alignment: Alignment.centerRight,
-          child: const Icon(Icons.delete_sweep, color: Colors.white),
         ),
       ),
     );

@@ -6,11 +6,11 @@ final ThemeData themeData = ThemeData(
       fontFamily: "SFProDisplay",
       fontWeight: FontWeight.w400,
       fontSize: 12,
-      color: Colors.white,
+      color: Colors.white60,
     ),
     headline1: TextStyle(
       fontFamily: "SFProDisplay",
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.bold,
       fontSize: 18,
       color: Colors.white,
     ),

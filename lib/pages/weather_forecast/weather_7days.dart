@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/api/forecast_api.dart';
 import '../../api/constants.dart';
+import '../../api/forecast_api.dart';
 
 class Weather7days extends StatelessWidget {
   const Weather7days({Key? key, required this.item}) : super(key: key);
@@ -16,10 +16,9 @@ class Weather7days extends StatelessWidget {
       decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 6),
             child: Text("Forcats for 7 Days",
                 style: theme.textTheme.headline1, textAlign: TextAlign.center),
           ),
@@ -30,13 +29,12 @@ class Weather7days extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: item.length,
               itemBuilder: (context, index) {
-                var dateFromApi = (item[index].dt);
-                var icon = Constants.iconPath + item[index].icon;
-                var tempMin = item[index].tempMin;
-                var tempMax = item[index].tempMax;
-                var rain = item[index].pop;
+                String dateFromApi = (item[index].dt);
+                String icon = Constants.iconPath + item[index].icon;
+                int tempMin = item[index].tempMin;
+                int tempMax = item[index].tempMax;
+                double rain = item[index].pop;
                 return Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text(dateFromApi,

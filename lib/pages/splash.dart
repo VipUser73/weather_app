@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/weather_forecast/forecast_page.dart';
 import '../models/local.dart';
-import 'Manage_location/locations_page.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -24,11 +24,7 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               child: const Center(
-                child: Text(
-                  "Weather",
-                  textAlign: TextAlign.center,
-                ),
-              ),
+                  child: CircularProgressIndicator(color: Colors.white)),
             ),
           );
         });
@@ -37,6 +33,7 @@ class SplashScreen extends StatelessWidget {
   Future initServices(BuildContext context) async {
     return StorageRepository().getCitiesList().then((value) =>
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => const LocationsPage())));
+            builder: (BuildContext context) =>
+                const ForecastPage(initialPage: 0))));
   }
 }

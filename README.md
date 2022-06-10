@@ -1,16 +1,12 @@
-# flutter_app
+Колесников Евгений
 
-A new Flutter project.
+Тестовое задание Mobile (Flutter)
 
-## Getting Started
+В приложении выводится информация о погоде, информация загружается из API OpenWeatherMap (One Call API 1.0). Координаты города (широта и долгота) для запроса загружаются из локального файла(city_list.json). В приложении три экрана: Splash, Locations, Forecast.
 
-This project is a starting point for a Flutter application.
+Экран "Splash" используется для загрузки списка городов из локального файла.
+На экране "Locations" добавляются карточки городов с минимальной информацией, полную информацию можно увидеть нажав на карточку, при этом будет осуществлён переход на экран "Forecast". Для удаления карточки из списка используется свайп влево.
 
-A few resources to get you started if this is your first Flutter project:
+Экран "Forecast" содержит информацию о погоде выбранного города. Для каждого города отображается текущая погода(температура воздуха, скорость ветра, атмосферное давление, вероятность дождя, влажность воздуха), почасовая погода на ближайшие 48 часов, погода на ближайшие 7 дней. Навигация между городами реализована с помощью горизонтальных свайпов.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Приложение тестировалось на эмуляторе Pixel 3 XL. Иногда приходится ипользовать VPN, чтобы лолучить доступ к API (зависит от провайдера).

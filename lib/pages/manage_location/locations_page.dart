@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/manage_location/city_vh.dart';
 import '../../api/forecast_api.dart';
 import '../../models/local.dart';
 import '../../models/weather.dart';
 import '../weather_forecast/forecast_page.dart';
+import 'city_vh.dart';
 
 class LocationsPage extends StatefulWidget {
   const LocationsPage({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class _LocationsPageState extends State<LocationsPage> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,25 +50,11 @@ class _LocationsPageState extends State<LocationsPage> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.of(context).pop();
                       },
                       child: const Icon(
                         Icons.arrow_back,
                         size: 30,
-                        color: Colors.white,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ForecastPage(initialPage: 0)));
-                      },
-                      child: const Icon(
-                        Icons.location_searching,
-                        size: 29,
                         color: Colors.white,
                       ),
                     ),
@@ -82,7 +68,7 @@ class _LocationsPageState extends State<LocationsPage> {
                   style: titleTextStyle,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: TextField(
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(
