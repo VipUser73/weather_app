@@ -67,7 +67,7 @@ class _ForecastPageState extends State<ForecastPage> {
                     : (_citiesList.isEmpty)
                         ? Center(
                             child: Text(
-                              "Список городов пуст!\nЧтобы добавить,\nнажмите на иконку сверху.",
+                              "The list of cities is empty!\nTo add, click on the icon at the top.",
                               style: titleTextStyle?.copyWith(fontSize: 20),
                               textAlign: TextAlign.center,
                             ),
