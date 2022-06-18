@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../api/forecast_api.dart';
+import '../../models/forecast_api.dart';
 
 class CityList {
   static List<Cities> allCities = [];

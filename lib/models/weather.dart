@@ -1,5 +1,5 @@
-import '../api/constants.dart';
-import '../api/forecast_api.dart';
+import '../services/weather_api_provider.dart';
+import 'forecast_api.dart';
 import 'local.dart';
 
 class WeatherService {
@@ -14,7 +14,7 @@ class WeatherService {
     }
     final currentCity = enteredCityList[0];
     final weatherByCityName =
-        await WeaherAPI().getCurrentWeather(currentCity.lat, currentCity.lon);
+        await WeaherProvider().getWeather(currentCity.lat, currentCity.lon);
     weatherByCityName.name = currentCity.city;
     return weatherByCityName;
   }

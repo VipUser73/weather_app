@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../api/forecast_api.dart';
+import 'forecast_api.dart';
 
 class StorageRepository {
   static List<Cities> allCities = [];

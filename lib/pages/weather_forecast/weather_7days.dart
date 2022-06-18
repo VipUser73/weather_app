@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../api/constants.dart';
-import '../../api/forecast_api.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../services/weather_api_provider.dart';
+import '../../models/forecast_api.dart';
 
 class Weather7days extends StatelessWidget {
   const Weather7days({Key? key, required this.item}) : super(key: key);
@@ -11,7 +12,7 @@ class Weather7days extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       padding: EdgeInsets.zero,
-      height: MediaQuery.of(context).size.height / 3,
+      height: MediaQuery.of(context).size.height / 2.8,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(border: Border.all(color: Colors.white)),
       child: Column(
@@ -29,37 +30,42 @@ class Weather7days extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: item.length,
               itemBuilder: (context, index) {
-                String dateFromApi = (item[index].dt);
-                String icon = Constants.iconPath + item[index].icon;
-                int tempMin = item[index].tempMin;
-                int tempMax = item[index].tempMax;
-                double rain = item[index].pop;
                 return Row(
                   children: [
                     Expanded(
-                      child: Text(dateFromApi,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.headline1),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Image.network(
-                        "$icon.png",
-                        alignment: Alignment.center,
-                        width: 35,
-                        height: 35,
-                        fit: BoxFit.none,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 35),
+                        child: Text(item[index].dt,
+                            textAlign: TextAlign.left,
+                            style: theme.textTheme.headline1),
                       ),
                     ),
                     Expanded(
-                      child: Text("${(rain * 100).toStringAsFixed(0)}% rain",
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: SvgPicture.asset(
+                          "assets/icons/conditions/${item[index].icon}.svg",
+                          alignment: Alignment.center,
+                          width: 35,
+                          height: 35,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                          "${(item[index].pop * 100).toStringAsFixed(0)}% rain",
                           textAlign: TextAlign.left,
                           style: theme.textTheme.headline1),
                     ),
                     Expanded(
-                      child: Text(" $tempMin°/$tempMax°",
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.headline1),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                            "${item[index].tempMin}°/${item[index].tempMax}°",
+                            textAlign: TextAlign.left,
+                            style: theme.textTheme.headline1),
+                      ),
                     ),
                   ],
                 );

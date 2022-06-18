@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../api/constants.dart';
-import '../../api/forecast_api.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../models/forecast_api.dart';
 
 class CityVH extends StatelessWidget {
   const CityVH(
@@ -16,8 +16,6 @@ class CityVH extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    String icon = Constants.iconPath + cityWeather.icon;
-    String cityName = cityWeather.name;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -47,12 +45,13 @@ class CityVH extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(cityName,
+                        Text(cityWeather.name,
                             maxLines: 1, style: theme.textTheme.headline1),
                         Text(
                           cityWeather.description,
@@ -65,10 +64,15 @@ class CityVH extends StatelessWidget {
                     ),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.network(
-                        "$icon.png",
-                        scale: 0.7,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SvgPicture.asset(
+                          "assets/icons/conditions/${cityWeather.icon}.svg",
+                          width: 40,
+                          height: 40,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       Text(

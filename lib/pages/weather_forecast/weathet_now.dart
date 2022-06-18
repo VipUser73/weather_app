@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../api/constants.dart';
-import '../../api/forecast_api.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../models/forecast_api.dart';
 
 class WeatherNow extends StatelessWidget {
   const WeatherNow({Key? key, required this.item}) : super(key: key);
@@ -10,39 +10,28 @@ class WeatherNow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    String cityName = item.name;
-    String dateFromApi = (item.daily[0].dt);
-    String icon = Constants.iconPath + item.icon;
-    String description = item.description;
-    int tempNow = item.temp;
-    int wind = item.wind;
-    double pop = item.hourly[0].pop;
-    int pressure = item.pressure;
-    int humidity = item.humidity;
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(cityName,
+        Text(item.name,
             style: theme.textTheme.headline1?.copyWith(fontSize: 24)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: Image.network(
-                "$icon.png",
-                width: 120,
-                height: 120,
-                scale: 0.4,
+              child: SvgPicture.asset(
+                "assets/icons/conditions/${item.icon}.svg",
+                width: 100,
+                height: 100,
               ),
             ),
             Column(
               children: [
-                Text(dateFromApi, style: theme.textTheme.headline1),
-                Text("$tempNow°",
+                Text(item.daily[0].dt, style: theme.textTheme.headline1),
+                Text("${item.temp}",
                     style: theme.textTheme.headline1?.copyWith(fontSize: 60)),
-                Text(description, style: theme.textTheme.headline1),
+                Text(item.description, style: theme.textTheme.headline1),
               ],
             ),
           ],
@@ -64,7 +53,8 @@ class WeatherNow extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text("$wind m/s\nWind", style: theme.textTheme.bodyText1),
+                  Text("${item.wind} m/s\nWind",
+                      style: theme.textTheme.bodyText1),
                 ],
               ),
               Row(
@@ -74,7 +64,7 @@ class WeatherNow extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text("${(pop * 100).round()}%\nChance of rain",
+                  Text("${(item.hourly[0].pop * 100).round()}%\nChance of rain",
                       style: theme.textTheme.bodyText1),
                 ],
               ),
@@ -93,7 +83,7 @@ class WeatherNow extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text("$pressure hPa\nPressure",
+                  Text("${item.pressure} hPa\nPressure",
                       style: theme.textTheme.bodyText1),
                 ],
               ),
@@ -106,7 +96,7 @@ class WeatherNow extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 26),
-                    child: Text("$humidity% \nHumidity",
+                    child: Text("${item.humidity}% \nHumidity",
                         style: theme.textTheme.bodyText1),
                   ),
                 ],

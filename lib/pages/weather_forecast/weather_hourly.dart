@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/api/forecast_api.dart';
-import '../../api/constants.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_app/models/forecast_api.dart';
 
 class WeatherHourly extends StatelessWidget {
   const WeatherHourly({Key? key, required this.item}) : super(key: key);
@@ -10,7 +10,7 @@ class WeatherHourly extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      height: 120,
+      height: 110,
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(border: Border.all(color: Colors.white)),
@@ -20,10 +20,6 @@ class WeatherHourly extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: item.length,
         itemBuilder: (context, index) {
-          int dateFromApi = (item[index].hour);
-          String icon = Constants.iconPath + item[index].icon;
-          int tempHourly = item[index].temp;
-          double rain = item[index].pop;
           return Container(
             width: MediaQuery.of(context).size.width / 4.6,
             height: 150,
@@ -34,15 +30,15 @@ class WeatherHourly extends StatelessWidget {
                 if (index == 0) ...[
                   Text("Now", style: theme.textTheme.headline1),
                 ] else ...[
-                  Text("$dateFromApi", style: theme.textTheme.headline1)
+                  Text("${item[index].hour}", style: theme.textTheme.headline1)
                 ],
-                Image.network(
-                  "$icon.png",
-                  width: 40,
-                  height: 40,
+                SvgPicture.asset(
+                  ("assets/icons/conditions/${item[index].icon}.svg"),
+                  width: 30,
+                  height: 30,
                 ),
-                Text("$tempHourly°", style: theme.textTheme.headline1),
-                Text("${(rain * 100).toStringAsFixed(0)}% rain",
+                Text("${item[index].temp}°", style: theme.textTheme.headline1),
+                Text("${(item[index].pop * 100).toStringAsFixed(0)}% rain",
                     style: theme.textTheme.headline1),
               ],
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../api/forecast_api.dart';
+import '../../models/forecast_api.dart';
 import '../../models/weather.dart';
 import '../manage_location/locations_page.dart';
 import 'weather_7days.dart';
