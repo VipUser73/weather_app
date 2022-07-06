@@ -1,30 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../models/forecast_api.dart';
-import '../../models/weather.dart';
-import '../manage_location/locations_page.dart';
-import 'weather_7days.dart';
-import 'weather_hourly.dart';
-import 'weathet_now.dart';
+import 'package:flutter_app/pages/manage_location/locations_page.dart';
+import 'package:flutter_app/pages/weather_forecast/widgets/page_view.dart';
 
-class ForecastPage extends StatefulWidget {
-  const ForecastPage({Key? key, required this.initialPage}) : super(key: key);
-  final int initialPage;
-
-  @override
-  State<ForecastPage> createState() => _ForecastPageState();
-}
-
-class _ForecastPageState extends State<ForecastPage> {
-  late final dynamic _controller;
-  List<ForecastApi> _citiesList = [];
-  bool _isLoading = true;
-  @override
-  void initState() {
-    _controller = PageController(initialPage: widget.initialPage);
-    getFavCitiesList();
-    super.initState();
-  }
+class ForecastPage extends StatelessWidget {
+  ForecastPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +30,9 @@ class _ForecastPageState extends State<ForecastPage> {
                 padding: const EdgeInsets.only(top: 5, right: 5),
                 child: TextButton(
                   onPressed: () {
-                    openLocations(context);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const LocationsPage()));
                   },
                   child: const Icon(
                     Icons.add,
@@ -60,81 +41,11 @@ class _ForecastPageState extends State<ForecastPage> {
                   ),
                 ),
               ),
-              Expanded(
-                child: _isLoading == true
-                    ? const Center(
-                        child: CircularProgressIndicator(color: Colors.white))
-                    : (_citiesList.isEmpty)
-                        ? Center(
-                            child: Text(
-                              "The list of cities is empty!\nTo add, click on the icon at the top.",
-                              style: titleTextStyle?.copyWith(fontSize: 20),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        : Stack(
-                            alignment: AlignmentDirectional.bottomCenter,
-                            children: [
-                                PageView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  controller: _controller,
-                                  itemCount: _citiesList.length,
-                                  itemBuilder: (context, index) {
-                                    final cityWeather = _citiesList[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 10, 10),
-                                      child: Column(
-                                        children: [
-                                          WeatherNow(item: cityWeather),
-                                          WeatherHourly(
-                                              item: cityWeather.hourly),
-                                          Weather7days(item: cityWeather.daily),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SmoothPageIndicator(
-                                        controller: _controller,
-                                        count: _citiesList.length,
-                                        effect: ScrollingDotsEffect(
-                                          dotColor: Colors.blue.shade400,
-                                          activeDotColor: Colors.white,
-                                          dotWidth: 10,
-                                          dotHeight: 6,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ]),
-              ),
+              const PageViewWidget()
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future openLocations(BuildContext context) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LocationsPage()),
-    );
-    getFavCitiesList();
-  }
-
-  Future getFavCitiesList() async {
-    final items = await WeatherService().getFavWeatherList();
-    setState(() {
-      _citiesList = items;
-      _isLoading = false;
-    });
   }
 }

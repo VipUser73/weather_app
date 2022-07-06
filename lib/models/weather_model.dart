@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:intl/intl.dart';
 
-class ForecastApi {
-  String name = "";
+class WeatherModel {
+  String name;
   double lat;
   double lon;
   int timezoneOffset;
@@ -15,8 +14,9 @@ class ForecastApi {
   List<Hourly> hourly;
   List<Daily> daily;
 
-  ForecastApi(
-      {required this.lat,
+  WeatherModel(
+      {required this.name,
+      required this.lat,
       required this.lon,
       required this.timezoneOffset,
       required this.temp,
@@ -28,8 +28,9 @@ class ForecastApi {
       required this.hourly,
       required this.daily});
 
-  factory ForecastApi.fromJson(Map<String, dynamic> json) {
-    return ForecastApi(
+  factory WeatherModel.fromJson(Map<String, dynamic> json, String city) {
+    return WeatherModel(
+      name: city,
       lat: json['lat'].toDouble(),
       lon: json['lon'].toDouble(),
       timezoneOffset: json['timezone_offset'],
@@ -100,44 +101,5 @@ class Daily {
         tempMin: json['temp']['min'].toInt(),
         tempMax: json['temp']['max'].toInt(),
         pop: json['pop'].toDouble());
-  }
-}
-
-class Cities {
-  String city;
-  double lat;
-  double lon;
-
-  Cities({
-    required this.city,
-    required this.lat,
-    required this.lon,
-  });
-
-  factory Cities.fromJSON(Map<String, dynamic> json) {
-    return Cities(
-      city: json["name"],
-      lat: json["coord"]["lat"],
-      lon: json["coord"]["lon"],
-    );
-  }
-
-  static List<Cities> listFromBody(List<dynamic> body) =>
-      body.map((e) => Cities.fromJSON(e as Map<String, dynamic>)).toList();
-
-  Map<String, dynamic> toJson() => {
-        "name": city,
-        "coord": {"lat": lat, "lon": lon},
-      };
-
-  static String jsonFromList(List<Cities> citiesList) =>
-      jsonEncode(citiesList.map((e) => e.toJson()).toList());
-
-  factory Cities.fromWeather(ForecastApi item) {
-    return Cities(
-      city: item.name,
-      lat: item.lat,
-      lon: item.lon,
-    );
   }
 }
