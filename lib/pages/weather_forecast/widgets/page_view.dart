@@ -7,8 +7,8 @@ import 'package:flutter_app/pages/weather_forecast/widgets/weathet_now.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PageViewWidget extends StatelessWidget {
-  const PageViewWidget({Key? key}) : super(key: key);
-
+  PageViewWidget({Key? key}) : super(key: key);
+  final _controller = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CityBloc, CityState>(
@@ -30,8 +30,7 @@ class PageViewWidget extends StatelessWidget {
                   children: [
                     PageView.builder(
                       physics: const BouncingScrollPhysics(),
-                      controller: PageController(
-                          initialPage: state.weatherFavList.length),
+                      controller: _controller,
                       itemCount: state.weatherFavList.length,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -52,8 +51,7 @@ class PageViewWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SmoothPageIndicator(
-                            controller: PageController(
-                                initialPage: state.weatherFavList.length),
+                            controller: _controller,
                             count: state.weatherFavList.length,
                             effect: ScrollingDotsEffect(
                               dotColor: Colors.blue.shade400,

@@ -23,12 +23,14 @@ class Weather7days extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: Text("Forcats for 7 Days",
-                      style: theme.textTheme.headline1,
+                      style: theme.textTheme.headline2,
                       textAlign: TextAlign.center),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 5),
+                    padding: const EdgeInsets.only(bottom: 10),
                     scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
                     itemCount: state.weatherFavList[page].daily.length,
@@ -41,7 +43,7 @@ class Weather7days extends StatelessWidget {
                               child: Text(
                                   state.weatherFavList[page].daily[index].dt,
                                   textAlign: TextAlign.left,
-                                  style: theme.textTheme.headline1),
+                                  style: theme.textTheme.headline2),
                             ),
                           ),
                           Expanded(
@@ -57,18 +59,21 @@ class Weather7days extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Text(
-                                "${(state.weatherFavList[page].daily[index].pop * 100).toStringAsFixed(0)}% rain",
-                                textAlign: TextAlign.left,
-                                style: theme.textTheme.headline1),
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Text(
+                                  "${(state.weatherFavList[page].daily[index].pop * 100).toStringAsFixed(0)}% rain",
+                                  textAlign: TextAlign.center,
+                                  style: theme.textTheme.headline2),
+                            ),
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(right: 35),
                               child: Text(
                                   "${state.weatherFavList[page].daily[index].tempMin}°/${state.weatherFavList[page].daily[index].tempMax}°",
-                                  textAlign: TextAlign.left,
-                                  style: theme.textTheme.headline1),
+                                  textAlign: TextAlign.right,
+                                  style: theme.textTheme.headline2),
                             ),
                           ),
                         ],

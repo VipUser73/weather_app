@@ -23,9 +23,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _loadingRepository() async {
-    await _storageRepository.getCitiesList();
     await _storageRepository.getFavWeatherList();
-
     add(InitialisedEvent());
   }
 }

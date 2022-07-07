@@ -30,7 +30,7 @@ class LocationsPage extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.pop(context);
                       },
                       child: const Icon(
                         Icons.arrow_back,

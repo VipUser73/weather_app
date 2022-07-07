@@ -4,11 +4,17 @@ final ThemeData themeData = ThemeData(
   textTheme: const TextTheme(
     bodyText1: TextStyle(
       fontFamily: "SFProDisplay",
-      fontWeight: FontWeight.w400,
-      fontSize: 12,
-      color: Colors.white60,
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+      color: Colors.white,
     ),
     headline1: TextStyle(
+      fontFamily: "SFProDisplay",
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+      color: Colors.white,
+    ),
+    headline2: TextStyle(
       fontFamily: "SFProDisplay",
       fontWeight: FontWeight.bold,
       fontSize: 18,

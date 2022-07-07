@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/bloc/city_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_app/models/weather_model.dart';
 
 class WeatherHourly extends StatelessWidget {
   const WeatherHourly({Key? key, required this.page}) : super(key: key);
@@ -26,10 +25,10 @@ class WeatherHourly extends StatelessWidget {
               itemCount: state.weatherFavList[page].hourly.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: MediaQuery.of(context).size.width / 4.6,
-                  height: 150,
+                  width: 80,
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (index == 0) ...[

@@ -7,17 +7,16 @@ import 'package:flutter_app/models/cities_model.dart';
 class LocalRepository {
   LocalRepository(this._dbProvider);
   final DBProvider _dbProvider;
-  List<Cities> citiesList = [];
-  List<Cities> allCities = [];
+  List<Cities> citiesFromJson = [];
   List<WeatherModel> weatherFavList = [];
 
   Future<List<Cities>> getCitiesList() async {
     var response = await rootBundle.loadString('assets/city_list.json');
     final data = await jsonDecode(response) as List<dynamic>;
-    allCities = data
+    citiesFromJson = data
         .map((dynamic e) => Cities.fromJson(e as Map<String, dynamic>))
         .toList();
-    return allCities;
+    return citiesFromJson;
   }
 
   Future<List<WeatherModel>> getFavWeatherList() async {

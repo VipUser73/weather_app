@@ -36,8 +36,9 @@ class CityCard extends StatelessWidget {
                         child: const Icon(Icons.delete, color: Colors.white),
                       ),
                       child: GestureDetector(
-                        onTap: () =>
-                            context.read<CityBloc>().add(LoadForecastEvent()),
+                        onTap: () {
+                          //context.read<CityBloc>().add(LoadForecastEvent());
+                        },
                         child: Card(
                           margin: EdgeInsets.zero,
                           color: const Color.fromARGB(255, 50, 100, 160),

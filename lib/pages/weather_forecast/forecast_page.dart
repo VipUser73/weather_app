@@ -30,9 +30,9 @@ class ForecastPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 5, right: 5),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const LocationsPage()));
+                    Route route = MaterialPageRoute(
+                        builder: (context) => const LocationsPage());
+                    Navigator.push(context, route);
                   },
                   child: const Icon(
                     Icons.add,
@@ -41,7 +41,7 @@ class ForecastPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const PageViewWidget()
+              PageViewWidget()
             ],
           ),
         ),

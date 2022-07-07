@@ -8,7 +8,7 @@ import 'package:path/path.dart';
 
 class DBProvider {
   Database? _database;
-  List<Cities> citiesList = [];
+  List<Cities> citiesFromDB = [];
   List<WeatherModel> weatherFavList = [];
 
   Future<Database> get database async {
@@ -41,22 +41,22 @@ class DBProvider {
     return raw;
   }
 
-  Future<List<Cities>> readCities() async {
-    final db = await database;
-    var res = await db.query("CITIES_LIST");
-    citiesList = res.map((e) => Cities.fromDB(e)).toList();
-    return citiesList;
-  }
-
   Future<WeatherModel> getWeatherByCityName(Cities currentCity) async {
     final weatherByCityName = await WeaherApi()
         .getWeather(currentCity.city, currentCity.lon, currentCity.lat);
     return weatherByCityName;
   }
 
+  Future<List<Cities>> getFavCitiesList() async {
+    final db = await database;
+    var res = await db.query("CITIES_LIST");
+    citiesFromDB = res.map((e) => Cities.fromDB(e)).toList();
+    return citiesFromDB;
+  }
+
   Future<List<WeatherModel>> getFavWeatherList() async {
-    await readCities();
-    weatherFavList = await Future.wait(citiesList
+    await getFavCitiesList();
+    weatherFavList = await Future.wait(citiesFromDB
         .map((e) => WeaherApi().getWeather(e.city, e.lon, e.lat))
         .toList());
     return weatherFavList;

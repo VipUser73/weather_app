@@ -49,18 +49,32 @@ class CityBloc extends Bloc<CityEvent, CityState> {
   final LocalRepository _storageRepository;
 
   void _addCities(SearchCityEvent event, Emitter<CityState> emit) async {
-    try {
-      final Cities cityAndCoord = _storageRepository.allCities.firstWhere(
-          (e) => e.city.toLowerCase() == event.cityName.toLowerCase());
-
-      if ((_storageRepository.citiesList.where(
-              (e) => e.city.toLowerCase() == event.cityName.toLowerCase()))
-          .isEmpty) {
+    if (_storageRepository.weatherFavList.isEmpty) {
+      try {
+        final Cities cityAndCoord = _storageRepository.citiesFromJson
+            .firstWhere(
+                (e) => e.city.toLowerCase() == event.cityName.toLowerCase());
         await _storageRepository.addCity(cityAndCoord);
         _updateListCities();
+      } catch (error) {
+        print('City is not found');
       }
-    } catch (error) {
-      print('City is not found');
+    } else {
+      try {
+        final Cities cityAndCoord = _storageRepository.citiesFromJson
+            .firstWhere(
+                (e) => e.city.toLowerCase() == event.cityName.toLowerCase());
+
+        if ((_storageRepository.weatherFavList.where((city) =>
+            city.name.toLowerCase() == event.cityName.toLowerCase())).isEmpty) {
+          await _storageRepository.addCity(cityAndCoord);
+          _updateListCities();
+        } else {
+          print('The city is already on the list.');
+        }
+      } catch (error) {
+        print('City is not found.');
+      }
     }
   }
 
@@ -77,7 +91,7 @@ class CityBloc extends Bloc<CityEvent, CityState> {
 
   void _deleteCities(DeleteCityEvent event, Emitter<CityState> emit) async {
     await _storageRepository.deleteCity(event.cityName);
-    //emit(CityLoadedState(weatherFavList: event.weatherFavList));
+    _updateListCities();
   }
 
   void _loadForecast(LoadForecastEvent event, Emitter<CityState> emit) async {
