@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bloc/city_bloc.dart';
 import 'package:flutter_app/models/theme.dart';
-import 'package:flutter_app/pages/splash.dart';
+import 'package:flutter_app/pages/manage_location/locations_page.dart';
+import 'package:flutter_app/pages/weather_forecast/forecast_page.dart';
 import 'package:flutter_app/services/db_provider.dart';
 import 'package:flutter_app/repositories/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +19,13 @@ class MyApp extends StatelessWidget {
         child: BlocProvider<CityBloc>(
           create: (context) => CityBloc(context.read<LocalRepository>()),
           child: MaterialApp(
+            routes: {
+              '/': (context) => const ForecastPage(),
+              '/locations': (context) => const LocationsPage()
+            },
+            initialRoute: '/',
             theme: themeData,
-            home: const SplashScreen(),
+            //home: const ForecastPage(),
           ),
         ));
   }

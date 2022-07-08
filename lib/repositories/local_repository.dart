@@ -8,6 +8,7 @@ class LocalRepository {
   LocalRepository(this._dbProvider);
   final DBProvider _dbProvider;
   List<Cities> citiesFromJson = [];
+  List<Cities> citiesFromDB = [];
   List<WeatherModel> weatherFavList = [];
 
   Future<List<Cities>> getCitiesList() async {
