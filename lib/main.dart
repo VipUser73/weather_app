@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/bloc/city_bloc.dart';
+import 'package:flutter_app/bloc/weather_bloc.dart';
 import 'package:flutter_app/models/theme.dart';
 import 'package:flutter_app/pages/manage_location/locations_page.dart';
 import 'package:flutter_app/pages/weather_forecast/forecast_page.dart';
@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
         value: _storageRepository,
-        child: BlocProvider<CityBloc>(
-          create: (context) => CityBloc(context.read<LocalRepository>()),
+        child: BlocProvider<WeaterBloc>(
+          create: (context) => WeaterBloc(context.read<LocalRepository>()),
           child: MaterialApp(
             routes: {
               '/': (context) => const ForecastPage(),
@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
             },
             initialRoute: '/',
             theme: themeData,
-            //home: const ForecastPage(),
           ),
         ));
   }

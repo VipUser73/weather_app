@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/weather_forecast/widgets/buttons.dart';
+import 'package:flutter_app/pages/weather_forecast/widgets/button.dart';
 import 'package:flutter_app/pages/weather_forecast/widgets/page_view.dart';
 
 class ForecastPage extends StatelessWidget {
@@ -24,7 +24,7 @@ class ForecastPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              ButtonForecast(),
+              const ButtonForecast(),
               PageViewWidget(),
             ],
           ),

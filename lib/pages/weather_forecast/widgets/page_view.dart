@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/bloc/city_bloc.dart';
+import 'package:flutter_app/bloc/weather_bloc.dart';
+import 'package:flutter_app/bloc/weather_event.dart';
+import 'package:flutter_app/bloc/weather_state.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_app/pages/weather_forecast/widgets/weather_7days.dart';
 import 'package:flutter_app/pages/weather_forecast/widgets/weather_hourly.dart';
 import 'package:flutter_app/pages/weather_forecast/widgets/weathet_now.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class PageViewWidget extends StatelessWidget {
   PageViewWidget({Key? key}) : super(key: key);
-  final _controller = PageController(initialPage: 0);
+  var _controller = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CityBloc, CityState>(
-        bloc: context.read<CityBloc>()..add(LoadingForecastEvent()),
+    return BlocBuilder<WeaterBloc, WeatherState>(
+        bloc: context.read<WeaterBloc>()..add(LoadingForecastEvent()),
         builder: (context, state) {
           final theme = Theme.of(context);
           final titleTextStyle = theme.textTheme.headline1;
-
+          if (state.indexPage != 0) {
+            _controller = PageController(initialPage: state.indexPage);
+          }
           if (state is LoadingForecastState) {
             return const Center(
                 child: CircularProgressIndicator(color: Colors.white));
@@ -49,12 +54,22 @@ class PageViewWidget extends StatelessWidget {
                               return Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                                child: Column(
-                                  children: [
-                                    WeatherNow(page: index),
-                                    WeatherHourly(page: index),
-                                    Weather7days(page: index),
-                                  ],
+                                child: RefreshIndicator(
+                                  onRefresh: () async {
+                                    return context
+                                        .read<WeaterBloc>()
+                                        .add(LoadingForecastEvent());
+                                  },
+                                  child: ListView(
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(
+                                            parent: BouncingScrollPhysics()),
+                                    children: [
+                                      WeatherNow(page: index),
+                                      WeatherHourly(page: index),
+                                      Weather7days(page: index),
+                                    ],
+                                  ),
                                 ),
                               );
                             },
@@ -80,12 +95,8 @@ class PageViewWidget extends StatelessWidget {
                         ]),
                   );
           } else {
-            return Center(
-              child: Text(
-                "Нет состояний",
-                style: titleTextStyle?.copyWith(fontSize: 20),
-              ),
-            );
+            return const Center(
+                child: CircularProgressIndicator(color: Colors.white));
           }
         });
   }

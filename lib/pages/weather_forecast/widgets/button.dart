@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/bloc/city_bloc.dart';
+import 'package:flutter_app/bloc/weather_bloc.dart';
+import 'package:flutter_app/bloc/weather_event.dart';
+import 'package:flutter_app/bloc/weather_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ButtonForecast extends StatelessWidget {
@@ -7,7 +9,7 @@ class ButtonForecast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CityBloc, CityState>(
+    return BlocListener<WeaterBloc, WeatherState>(
         listener: (context, state) {
           if (state is GoToLocationsState) {
             Navigator.of(context).pushNamed('/locations');
@@ -17,10 +19,7 @@ class ButtonForecast extends StatelessWidget {
           padding: const EdgeInsets.only(top: 5, right: 5),
           child: TextButton(
             onPressed: () {
-              context.read<CityBloc>().add(GoToLocationsEvent());
-              // Route route = MaterialPageRoute(
-              //     builder: (context) => const LocationsPage());
-              // Navigator.push(context, route);
+              context.read<WeaterBloc>().add(GoToLocationsEvent());
             },
             child: const Icon(
               Icons.add,
